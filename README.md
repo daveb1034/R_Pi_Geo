@@ -100,6 +100,29 @@ Select the Layer Preview tab on the left of the page and then select the OpenLay
 Using the address above you can access the web services from any device on your network.
 
 
-### Whats next?
+### Remote Access
 
-THe next stage will be to load data into a postgis database and create some more functional and detailed web maps using Geoserver.
+Configure PGSql for remote access so other workstations on the network can access the database from programs such as QGIS.
+- This was achieved by modyifying the pg_hba.conf and add the following
+```
+host all all 192.168.1.0/24 md5
+```
+
+This provides access to all devices on the above network. NOTE: this is not secure so do not use in a production environment.
+
+Then edit the postgresql.conf file and change
+```
+listen_addresses='localhost'
+```
+to
+```
+listen_addresses='*'
+```
+If that fails just enter the ip addresses of the machines to grant access.
+Finally for the changes to take effect restart the postgresql service.
+
+### Next Steps?
+
+1. Load data into postgis database using pgadmin3.
+2. View and style data in QGIS.
+3. Create an SLD and test adding a service in geoserver.
